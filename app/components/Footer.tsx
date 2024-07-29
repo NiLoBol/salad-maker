@@ -4,27 +4,52 @@ import { useCategoryContext } from "./CategoryProvider";
 import SaladmakerIcon from "./Icon/SaladmakerIcon";
 import SaladmakerIconFooter from "./Icon/SaladmakerIconFooter";
 import CloseIcon from "./Icon/CloseIcon";
-import { DATAT } from "../Type";
+import { DATAT, Ingredient } from "../Type";
 import axios from "axios";
 
 export default function Footer() {
   const ref = useRef<HTMLInputElement>(null);
   const {
     Repect,
-    ingredients,
     CreateRecipe,
     setCreateRecipe,
     setRepect,
     data,
     setdata,
+    setCheckVegetables,
+    setCheckFruit,
+    setCheckToppings,
+    setCheckProtein,
+    setCheckDressing,
   } = useCategoryContext();
+
   const [count, setcount] = useState<number>(0);
   const [count2, setcount2] = useState<number>(0);
+
+  const [ingredients, setingredients] = useState<Ingredient[]>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("/api/salad", {
+          checkVegetables: false,
+          checkFruit: false,
+          checkToppings: false,
+          checkProtein: false,
+          checkDressing: false,
+        });
+        setingredients(response.data);
+      } catch (error) {
+        console.error("Error fetching ingredients:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   useEffect(() => {
     let sum: number = 0;
     let sum2: number = 0;
     for (let index = 0; index < Repect.length; index++) {
-      if (Repect[index] > 0) {
+      if (Repect[index] > 0 && ingredients) {
         sum += Repect[index];
         sum2 += ingredients[index].calories * Repect[index];
       }
@@ -40,7 +65,7 @@ export default function Footer() {
       document.getElementsByTagName("html")[0].className = "no-scrollbar";
     }
   }, [CreateRecipe]);
-  const UpdateData = async (data:DATAT[]) => {
+  const UpdateData = async (data: DATAT[]) => {
     try {
       // Sample payload for the POST request, you should replace this with your actual payload
       const response = await axios.post("/api/Recipe", data);
@@ -87,7 +112,7 @@ export default function Footer() {
       </div>
       {CreateRecipe ? (
         <div className="fixed w-screen h-screen bg-black/20 top-0 left-0 z-50 ">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px]  bg-white rounded-2xl">
+          <div className="absolute top-32 left-1/2 -translate-x-1/2  w-[500px]  bg-white rounded-2xl">
             <div
               onClick={() => setCreateRecipe(false)}
               className="hover:cursor-pointer flex flex-row-reverse pt-5 pe-10"
@@ -96,15 +121,18 @@ export default function Footer() {
             </div>
             <div className="flex flex-col">
               <div className="flex flex-col items-center mx-10">
-                <div className="bg-Primary w-[74px] h-[74px] flex justify-center items-center rounded-full ">
-                  <SaladmakerIconFooter className="fill-white " />
+                <div className="relative -top-3">
+                  <div className="bg-Primary w-[74px] h-[74px] flex justify-center items-center rounded-full ">
+                    <SaladmakerIconFooter className="fill-white " />
+                  </div>
                 </div>
-                <div className="text-xl font-bold my-6">Recipe Name</div>
+
+                <div className="text-xl font-bold mb-6">Recipe Name</div>
                 <input
                   type="text"
-                  className="w-full h-10 border-[#E8EAEB] border-[1px] rounded-lg mb-6 p-2 focus-visible:outline-none  "
+                  className="w-full h-10 border-[#E8EAEB] border-[1px] rounded-lg mb-6 p-2 focus-visible:outline-none text-sm "
                   ref={ref}
-                  placeholder="input your recipe name....."
+                  placeholder="Input Your Recipe Name....."
                 />
               </div>
               <div className="flex flex-row items-center mx-10 mt-4 mb-6  ">
@@ -118,7 +146,7 @@ export default function Footer() {
                 </div>
                 <div
                   onClick={() => {
-                    if (typeof(ref.current?.value) !== "string") {
+                    if (typeof ref.current?.value !== "string") {
                       alert("Please input your recipe name");
                     } else {
                       const Repectname = ref.current?.value;
@@ -145,13 +173,11 @@ export default function Footer() {
                         "SaladMakerRecipe-232325",
                         JSON.stringify(Copydata)
                       );
-                      UpdateData(Copydata)
+                      UpdateData(Copydata);
                       setRepect(
-                        Array.apply(null, Array(ingredients.length)).map(
-                          function (x, i) {
-                            return 0;
-                          }
-                        )
+                        Array.apply(null, Array(23)).map(function (x, i) {
+                          return 0;
+                        })
                       );
                       setCreateRecipe(false);
                     }

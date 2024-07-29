@@ -5,6 +5,9 @@ import DeleteIcon from "./Icon/DeleteIcon";
 import EditIcon from "./Icon/EditIcon";
 import axios from "axios";
 import EditPage from "./EditPage";
+import CloseIcon from "./Icon/CloseIcon";
+import SaladmakerIconFooter from "./Icon/SaladmakerIconFooter";
+import DeleteIcon2 from "./Icon/DeleteIcon2";
 
 export default function RecipePage() {
   const {
@@ -20,8 +23,16 @@ export default function RecipePage() {
   useEffect(() => {
     fetchData2();
   }, [])
-  
+  useEffect(() => {
+    if (CreateRecipe) {
+      document.getElementsByTagName("html")[0].className +=
+        " overflow-y-hidden";
+    } else {
+      document.getElementsByTagName("html")[0].className = "no-scrollbar";
+    }
+  }, [CreateRecipe]);
   const [edit, setedit] = useState<number>(-1);
+  const [indexdelete, setindexdelete] = useState<number>(-1);
 
   console.log(data);
   const DeleteData = async (index: number) => {
@@ -63,7 +74,8 @@ export default function RecipePage() {
                         <div className="w-full flex flex-row gap-[10px]">
                           <div
                             onClick={() => {
-                              DeleteData(index);
+                              setCreateRecipe(true)
+                              setindexdelete(index)
                             }}
                             className="basis-1/2 hover:cursor-pointer h-10 bg-white text-Red font-medium flex justify-center items-center rounded-full"
                           >
@@ -86,6 +98,51 @@ export default function RecipePage() {
                 );
               })}
             </div>
+            {CreateRecipe ? (
+        <div className="fixed w-screen h-screen bg-black/20 top-0 left-0 z-50 ">
+          <div className="absolute top-32 left-1/2 -translate-x-1/2  w-[500px]  bg-white rounded-2xl">
+            <div
+              onClick={() => setCreateRecipe(false)}
+              className="hover:cursor-pointer flex flex-row-reverse mt-3 pe-10"
+            >
+              <CloseIcon />
+            </div>
+            <div className="flex flex-col">
+              <div className="flex flex-col items-center mx-10">
+                <div className=" w-[74px] h-[74px] flex justify-center items-center rounded-full ">
+                  <div className="relative -top-3">
+                    <DeleteIcon2 />
+                  </div>
+                  
+                </div>
+                <div className="text-xl font-bold mb-6">Delete Recipe</div>
+                
+              </div>
+              <div className="flex flex-row items-center mx-10 mt-4 mb-6  ">
+                <div
+                  onClick={() => {
+                    setCreateRecipe(false);
+                  }}
+                  className="basis-1/2 flex justify-center items-center cursor-pointer h-[48px] font-bold bg-white rounded-lg"
+                >
+                  Cancel
+                </div>
+                <div
+                  onClick={() => {
+                    DeleteData(indexdelete)
+                    setCreateRecipe(false);
+                  }}
+                  className="basis-1/2 flex justify-center items-center cursor-pointer h-[48px] font-bold bg-Red text-white rounded-lg"
+                >
+                  Delete
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
           </div>
         </>
       ) : (

@@ -50,16 +50,6 @@
     "calories": 10
   },
   {
-    "name": "asf",
-    "items": [
-      {
-        "index": 3,
-        "count": 1
-      }
-    ],
-    "calories": 10
-  },
-  {
     "name": "asd",
     "items": [
       {
@@ -74,16 +64,6 @@
     "items": [
       {
         "index": 2,
-        "count": 1
-      }
-    ],
-    "calories": 10
-  },
-  {
-    "name": "asf",
-    "items": [
-      {
-        "index": 3,
         "count": 1
       }
     ],
@@ -108,5 +88,25 @@
       }
     ],
     "calories": 10
+  },
+  {
+    "name": "123456",
+    "items": [
+      {
+        "index": 5,
+        "count": 2
+      }
+    ],
+    "calories": 120
+  },
+  {
+    "name": "asd",
+    "items": [
+      {
+        "index": 5,
+        "count": 1
+      }
+    ],
+    "calories": 120
   }
 ]

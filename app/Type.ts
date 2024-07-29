@@ -1,4 +1,5 @@
 export type Ingredient = {
+  id:number,
   calories: number;
   category: "vegetable" | "fruit" | "protein" | "dressing" | "toppings";
   image: string;

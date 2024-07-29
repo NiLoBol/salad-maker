@@ -32,8 +32,8 @@ interface CategoryContextProps {
 
   data: DATAT[];
   setdata: React.Dispatch<React.SetStateAction<DATAT[]>>;
-  fetchData: () => Promise<void>
-  fetchData2: () => Promise<void>
+  fetchData: () => Promise<void>;
+  fetchData2: () => Promise<void>;
 }
 
 const CategoryContext = createContext<CategoryContextProps | undefined>(
@@ -42,24 +42,27 @@ const CategoryContext = createContext<CategoryContextProps | undefined>(
 
 const CategoryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
   const [checkVegetables, setCheckVegetables] = useState(false);
   const [checkFruit, setCheckFruit] = useState(false);
   const [checkToppings, setCheckToppings] = useState(false);
   const [checkProtein, setCheckProtein] = useState(false);
   const [checkDressing, setCheckDressing] = useState(false);
+
   const [Repect, setRepect] = useState<number[]>([]);
   const [CreateRecipe, setCreateRecipe] = useState<boolean>(false);
   const [data, setdata] = useState<DATAT[]>([]);
-  
+
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/salad");
+      const response = await axios.post("/api/salad", {
+        checkVegetables,
+        checkFruit,
+        checkToppings,
+        checkProtein,
+        checkDressing,
+      });
       setIngredients(response.data);
-      setRepect(
-        Array.apply(null, Array(response.data.length)).map(function (x, i) {
-          return 0;
-        })
-      );
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching ingredients:", error);
@@ -68,19 +71,24 @@ const CategoryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const fetchData2 = async () => {
     try {
       const response = await axios.get("/api/Recipe");
-      setdata(response.data)
+      setdata(response.data);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching ingredients:", error);
     }
   };
-  // const data = JSON.parse(localStorage.getItem("SaladMakerRecipe-232325") || "null");
   useEffect(() => {
-    fetchData2()
+    fetchData2();
     fetchData();
+    setRepect(
+      Array.apply(null, Array(23)).map(function (x, i) {
+        return 0;
+      })
+    );
   }, []);
-
-  
+  useEffect(() => {
+    fetchData();
+  }, [checkVegetables, checkFruit, checkToppings, checkProtein, checkDressing]);
 
   return (
     <CategoryContext.Provider
@@ -104,7 +112,7 @@ const CategoryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         data,
         setdata,
         fetchData,
-        fetchData2
+        fetchData2,
       }}
     >
       {children}
