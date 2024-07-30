@@ -88,6 +88,8 @@ export default function EditPage(props: {
                       //   setnewData(DATA);
                       // } else {
                       // }
+                      DATA.calories -=
+                        ingredients[newData.items[index].index].calories;
                       DATA.items.splice(index, 1);
                       setnewData(DATA);
                     }}
