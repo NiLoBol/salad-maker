@@ -75,19 +75,21 @@ export default function EditPage(props: {
                   <div
                     onClick={() => {
                       const DATA: DATAT = JSON.parse(JSON.stringify(newData));
-                      if (DATA.items[index].count >= 1) {
-                        if (DATA.items[index].count == 1) {
-                          DATA.calories -=
-                            ingredients[newData.items[index].index].calories;
-                          DATA.items.splice(index, 1);
-                        } else {
-                          DATA.items[index].count -= 1;
-                          DATA.calories -=
-                            ingredients[newData.items[index].index].calories;
-                        }
-                        setnewData(DATA);
-                      } else {
-                      }
+                      // if (DATA.items[index].count >= 1) {
+                      //   if (DATA.items[index].count == 1) {
+                      //     DATA.calories -=
+                      //       ingredients[newData.items[index].index].calories;
+                      //     DATA.items.splice(index, 1);
+                      //   } else {
+                      //     DATA.items[index].count -= 1;
+                      //     DATA.calories -=
+                      //       ingredients[newData.items[index].index].calories;
+                      //   }
+                      //   setnewData(DATA);
+                      // } else {
+                      // }
+                      DATA.items.splice(index, 1);
+                      setnewData(DATA);
                     }}
                     className="text-sm font-normal"
                   >

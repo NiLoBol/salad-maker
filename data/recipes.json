@@ -1,15 +1,5 @@
 [
   {
-    "name": "asd",
-    "items": [
-      {
-        "index": 1,
-        "count": 3
-      }
-    ],
-    "calories": 21
-  },
-  {
     "name": "asf",
     "items": [
       {
@@ -108,5 +98,33 @@
       }
     ],
     "calories": 120
+  },
+  {
+    "name": "sc",
+    "items": [
+      {
+        "index": 4,
+        "count": 1
+      },
+      {
+        "index": 5,
+        "count": 2
+      }
+    ],
+    "calories": 252
+  },
+  {
+    "name": "15",
+    "items": [
+      {
+        "index": 11,
+        "count": 1
+      },
+      {
+        "index": 15,
+        "count": 1
+      }
+    ],
+    "calories": 218
   }
 ]
