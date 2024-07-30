@@ -89,7 +89,7 @@ export default function EditPage(props: {
                       // } else {
                       // }
                       DATA.calories -=
-                        ingredients[newData.items[index].index].calories;
+                        ingredients[newData.items[index].index].calories*newData.items[index].count;
                       DATA.items.splice(index, 1);
                       setnewData(DATA);
                     }}
