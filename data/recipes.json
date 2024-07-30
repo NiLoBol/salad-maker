@@ -1,19 +1,5 @@
 [
   {
-    "name": "Recipe name 01",
-    "items": [
-      {
-        "index": 0,
-        "count": 1
-      },
-      {
-        "index": 6,
-        "count": 10
-      }
-    ],
-    "calories": 188
-  },
-  {
     "name": "Recipe name 02",
     "items": [
       {
