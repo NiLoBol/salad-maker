@@ -19,8 +19,9 @@ yarn run dev
 
 ## api
 
-#### เป็น api ที่มี 2 endpoint คือ Recipe กับ salad
-###### Recipe จะมีการใช้ GET POST DELETE PATCH
+### เป็น api ที่มี 2 endpoint คือ Recipe กับ salad
+
+#### Recipe จะมีการใช้ GET POST DELETE PATCH
 
         GET : ส่งออกข้อมูลที่อยู่ใน recipes.json
 
